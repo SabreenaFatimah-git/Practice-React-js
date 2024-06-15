@@ -1,0 +1,15 @@
+#heading{
+    color: red;
+}
+
+#child1{
+    color: rgb(15, 169, 58);
+}
+
+#child2{
+    color: rgb(85, 12, 146);
+}
+
+.head{
+    color: chocolate;
+}
