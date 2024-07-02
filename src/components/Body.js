@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./shimmer";
+import {Link} from "react-router-dom";
 
 const Body = () => {
   // creating a local state variable for listofrestaurants,
@@ -26,16 +27,18 @@ const Body = () => {
       //use this before ur url:  https://corsproxy.io/?
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
+
+    // converting this data to json
     const json = await data.json();
 
     // console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
     // optional chaining
     setListOfRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilteredRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
 
@@ -92,7 +95,8 @@ const Body = () => {
         {/* we will use js Map function for looping through the restaurant list */}
 
         {filteredRestaurant.map((restaurant) => (
-          <RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
+          <Link  key={restaurant?.info?.id} to={"/restaurants/"+ restaurant?.info?.id}>
+            <RestaurantCard resData={restaurant} /></Link>
         ))}
       </div>
     </div>
