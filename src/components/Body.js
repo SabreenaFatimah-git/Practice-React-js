@@ -1,7 +1,8 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./shimmer";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   // creating a local state variable for listofrestaurants,
@@ -41,6 +42,15 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus === false)
+    return (
+      <h2>
+        Looks like You are Offline!! Please chcek your Internet connection.
+      </h2>
+    );
 
   //This concept known as Conditional Rendering - i.e rendering on the basis of a condition
   /*if (ListOfRestaurants.length == 0) {
@@ -95,8 +105,12 @@ const Body = () => {
         {/* we will use js Map function for looping through the restaurant list */}
 
         {filteredRestaurant.map((restaurant) => (
-          <Link  key={restaurant?.info?.id} to={"/restaurants/"+ restaurant?.info?.id}>
-            <RestaurantCard resData={restaurant} /></Link>
+          <Link
+            key={restaurant?.info?.id}
+            to={"/restaurants/" + restaurant?.info?.id}
+          >
+            <RestaurantCard resData={restaurant} />
+          </Link>
         ))}
       </div>
     </div>
