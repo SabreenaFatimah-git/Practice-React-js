@@ -61,11 +61,11 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="filter flex justify-center">
+        <div className="search m-4 p-4">
           <input
             type="text"
-            className="search-box"
+            className="border border-solid border-black"
             value={searchText}
             onChange={(e) => {
               setsearchText(e.target.value);
@@ -73,6 +73,7 @@ const Body = () => {
           />
 
           <button
+            className="px-3 py-1 bg-green-700 m-4 rounded-lg"
             onClick={() => {
               //  filter restaurant cards logic  & update ui
               // search text
@@ -86,24 +87,25 @@ const Body = () => {
             Search
           </button>
         </div>
-
-        {/* passing an attribute onclick  and this onclick takes a callback function*/}
-        <button
-          className="filter-btn"
-          onClick={() => {
-            // filter logic
-            const filteredlist = ListOfRestaurants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setListOfRestaurant(filteredlist);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
+        <div className="m-4 p-4 flex items-center">
+          {/* passing an attribute onclick  and this onclick takes a callback function*/}
+          <button
+            className="px-3 py-1 bg-yellow-300 m-4 rounded-lg"
+            onClick={() => {
+              // filter logic
+              const filteredlist = ListOfRestaurants.filter(
+                (res) => res.info.avgRating > 4.3
+              );
+              // setListOfRestaurant(filteredlist);
+              setFilteredRestaurant(filteredlist);
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap justify-center">
         {/* we will use js Map function for looping through the restaurant list */}
-
         {filteredRestaurant.map((restaurant) => (
           <Link
             key={restaurant?.info?.id}

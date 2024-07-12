@@ -1,4 +1,5 @@
 import { CDN_URL } from "../utils/constants";
+import { Rating_Star } from "../utils/constants";
 
 const RestaurantCard = (props) => {
     const { resData } = props;
@@ -14,17 +15,21 @@ const RestaurantCard = (props) => {
     } = resData?.info;
   
     return (
-      <div className="res-card">
+      <div className="m-1 p-4 w-[320px] hover:scale-95">
         <img
-          className="res-logo"
+          className="rounded-2xl h-[180px] w-[285px] object-cover"
           alt="res-logo"
           src={CDN_URL + cloudinaryImageId}
         ></img>
-        <h4>{name}</h4>
+        <h4 className="font-bold py-2 text-lg
+        ">{name}</h4>
+        <div className="flex">
+        <img className="w-[21px] h-[21px] mx-1" src={Rating_Star}></img>
+        <h5 className="font-medium">{avgRating} stars . {sla?.slaString}</h5>
+        </div>
         <h5>{cuisines.join(",")}</h5>
-        <h5>{avgRating} stars</h5>
         <h5>{costForTwo}</h5>
-        <h5>{sla?.slaString}</h5>
+        
       </div>
     );
   };
