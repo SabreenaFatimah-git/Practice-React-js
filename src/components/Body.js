@@ -1,8 +1,9 @@
-import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import RestaurantCard, { withPromotedLable } from "./RestaurantCard";
+import { useEffect, useState, useContext } from "react";
 import Shimmer from "./shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // creating a local state variable for listofrestaurants,
@@ -16,6 +17,9 @@ const Body = () => {
 
   // local state variable for binding it to value of input
   const [searchText, setsearchText] = useState([]);
+
+  const RestaurantCardPromoted = withPromotedLable(RestaurantCard);
+  // console.log(ListOfRestaurants);
 
   // we are using this useEffct to be able to fetch data once our body component renders
   useEffect(() => {
@@ -57,6 +61,8 @@ const Body = () => {
     return <Shimmer />;
   }*/
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return ListOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
@@ -73,7 +79,7 @@ const Body = () => {
           />
 
           <button
-            className="px-3 py-1 bg-green-700 m-4 rounded-lg"
+            className="px-3 py-1 bg-[#40b455] m-4 rounded-lg"
             onClick={() => {
               //  filter restaurant cards logic  & update ui
               // search text
@@ -104,6 +110,16 @@ const Body = () => {
           </button>
         </div>
       </div>
+
+      <div className="m-4 p-4 flex items-center">
+        <label>User-Name:</label>
+        <input
+          className="border border-black p-2"
+          value={loggedInUser}
+          onChange={(e) => setUserName(e.target.value)}
+        ></input>
+      </div>
+
       <div className="flex flex-wrap justify-center">
         {/* we will use js Map function for looping through the restaurant list */}
         {filteredRestaurant.map((restaurant) => (
@@ -111,7 +127,13 @@ const Body = () => {
             key={restaurant?.info?.id}
             to={"/restaurants/" + restaurant?.info?.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {/* if the restaurant is promoted/top rated then add label to it */}
+
+            {restaurant.info.avgRating > 4.3 ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>

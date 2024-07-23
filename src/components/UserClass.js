@@ -21,7 +21,7 @@ class UserClass extends React.Component {
     // console.log("child componentdidmount");
     // make an Api call
     const data = await fetch(
-      // "https://api.github.com/users/SabreenaFatimah-git"
+      //  "https://api.github.com/users/SabreenaFatimah-git"
     );
     const json = await data.json();
 
@@ -29,7 +29,7 @@ class UserClass extends React.Component {
     this.setState({
       userInfo: json,
     });
-    console.log(json);
+    // console.log(json);
   }
 componentDidUpdate(){
   // this is called later on at the end of updating dom
